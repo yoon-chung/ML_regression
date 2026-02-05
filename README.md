@@ -14,20 +14,6 @@
 
 ---
 
-## 🗂 Project Structure
-
-```
-ML_regression/
-├── README.md
-├── src.ipynb              # 전체 분석 & 모델링 코드
-├── data/
-│   ├── train.csv          # 학습 데이터 (1,118,822 × 52)
-│   └── test.csv           # 평가 데이터 (9,272 × 51)
-└── output.csv             # 최종 예측 결과
-```
-
----
-
 ## 📊 Dataset
 
 **Source**: 국토교통부 아파트 실거래가 데이터 + 서울시 지하철역/버스정류장 정보 데이터
@@ -63,12 +49,19 @@ $$a = \sin^2\left(\frac{\Delta\phi}{2}\right) + \cos(\phi_1)\cos(\phi_2)\sin^2\l
 
 - 구별 평균가, 동별 평균가, 동별 평당가, 동별 최근 5년 평당가
 
+**기타**
+- 강남3구, gu_group(구별 매매가 mean, std로 kmeans수행하여 5개 그룹화)
+- 건물연식, 신축여부, within5yrs, within3yrs, over_30yrs, over_40yrs, over_50yrs
+- 고층*면적, 평형대 범주화(소/중소/중대/대형)
+- 금리
+- 분기
+
 ### 3) Model Selection
 
 | Model | Initial RMSE |
 |-------|-------------|
 | Random Forest | 47,133 |
-| XGBoost | - |
+| XGBoost | 46,287 |
 | **LightGBM** | **Best** |
 
 - XGBoost 대비 대용량 데이터(111만건)에 적합한 LightGBM의 학습 속도/성능 우수
@@ -111,14 +104,13 @@ Feature Importance 분석 및 상관분석을 통해 유의미한 변수 22개 �
 ---
 
 ## 📈 Result
-
-$$\text{RMSE}: 47{,}133 \rightarrow 14{,}751 \quad (\textbf{68.7\% 개선})$$
+RMSE: 47,133 → 14,751 (68.7% 개선)
 
 ---
 
 ## 💡 Key Insights
 
-1. XGBoost에 비해 대용량 데이터에 적합한 **LightGBM의 특성** 확인
+1. 빠른 실험 확인 가능하며 대용량 데이터에 적합한 **LightGBM의 특성** 확인
 2. 데이터 특성에 따른 **Cross Validation 전략 수정**이 중요함
 3. 파생변수가 많다고 해서 모델 성능이 개선되는 것은 아님
 4. 상관분석, Feature Importance 등 통해서 **유의미한 Feature Selection** 중요

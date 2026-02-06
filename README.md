@@ -27,12 +27,12 @@
 
 ## 🔍 Approach
 
-### 1) EDA
+### 1. EDA
 
 - **Log 변환**: 부동산 거래 특성상 오른쪽으로 꼬리가 긴 (Right Skewed) 분포 확인 → y변수에 로그 변환 적용
 - **결측치 보완**: 카카오맵 API로 아파트의 위도/경도 좌표 결측치 보완 (약 88만건)
 
-### 2) Feature Engineering
+### 2. Feature Engineering
 
 **좌표 기반 거리 파생변수**
 
@@ -56,18 +56,19 @@ $$a = \sin^2\left(\frac{\Delta\phi}{2}\right) + \cos(\phi_1)\cos(\phi_2)\sin^2\l
 - 금리
 - 분기
 
-### 3) Model Selection
+### 3. Model Selection
 
-| Model | Initial RMSE |
+| Model | Initial Valid RMSE |
 |-------|-------------|
-| Random Forest | 47,133 |
-| XGBoost | 46,287 |
-| **LightGBM** | **Best** |
+| Random Forest | 5850.79 |
+| XGBoost | 4403.02 |
+| **LightGBM** | **4114.19** |
+| 앙상블 (XGB+LGBM) | 4225.73 |
 
 - XGBoost 대비 대용량 데이터(111만건)에 적합한 LightGBM의 학습 속도/성능 우수
 - Model Selection 후 LightGBM 단일모델로 최종 선정
 
-### 4) Validation Strategy
+### 4. Validation Strategy
 
 **Time Series Split Cross Validation** 적용
 
@@ -79,7 +80,7 @@ Train set : 2007.01 ~ 2022.12
 Valid set : 2023.01 ~ 2023.06
 ```
 
-### 5) Hyperparameter Tuning
+### 5. Hyperparameter Tuning
 
 LightGBM 단일모델로 하이퍼파라미터 튜닝 실험 반복:
 
@@ -95,7 +96,7 @@ final_params = {
 }
 ```
 
-### 6) Feature Selection
+### 6. Feature Selection
 
 Feature Importance 분석 통해 유의미한 변수 22개 선택:
 

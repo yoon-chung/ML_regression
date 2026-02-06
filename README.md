@@ -97,9 +97,12 @@ final_params = {
 
 ### 6) Feature Selection
 
-Feature Importance 분석 및 상관분석을 통해 유의미한 변수 22개 선택:
+Feature Importance 분석 통해 유의미한 변수 22개 선택:
 
 > 파생변수가 많다고 해서 모델 성능이 개선되는 것은 아님 → Feature Selection 중요
+
+
+![Feature Importance](images/feature_importance.png)
 
 ---
 
